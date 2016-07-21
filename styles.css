@@ -178,6 +178,7 @@ button {
     width: 40%;
     height: 100%;
     position: relative;
+    flex-wrap: nowrap;
 
 }
 
@@ -193,11 +194,11 @@ button {
 
 .flex-chat__body{
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 7px;
     width: 100%;
     height: 20rem;
     word-wrap: normal;
-
 }
 
 
@@ -206,6 +207,7 @@ button {
     font-weight: bold;
     color: lightgrey;
     font-size: 14px;
+    word-wrap: normal;
 }
 
 .chat-name{
