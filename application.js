@@ -599,7 +599,6 @@ $(document).ready(function () {
 
             $('.roomkey-alert').off().on('click', 'button', function(){
                 closeMenu();
-                alertJoinRoom();
                 $('.roomkey-alert').addClass('hidden');
                 $('.title__roomkey').removeClass('hidden');
                 $('.title__roomkey').text(roomCode);
@@ -655,7 +654,6 @@ $(document).ready(function () {
                             $('.flex-chat__messages').find('.message').remove();
                             $('.flex-chat__messages').find('.chat-alert').remove();
                             closeMenu();
-                            alertJoinRoom();
                             $('.title__roomkey').removeClass('hidden');
                             $('.title__roomkey').text(roomCode);
                             listen_to_chat();
@@ -694,21 +692,6 @@ $(document).ready(function () {
             array[j] = temp;
         }
         return array;
-    }
-
-    function alertJoinRoom(){
-        var joinAlert = " joined the game";
-        var username ='';
-        var thisUser = firebase.auth().currentUser;
-        var uuid = thisUser.uid;
-        firebase.database().ref().child('Users').child(uuid).child('username').once('value', function(snapshot){
-            username = snapshot.val();
-        });
-        firebase.database().ref('Rooms/' + currentRoom).child('Messages').push({
-            alert: joinAlert,
-            sender: username //doubles message for every
-        });
-
     }
 
     function closeMenu() {
