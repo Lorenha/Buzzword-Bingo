@@ -59,6 +59,11 @@ $(document).ready(function () {
         });
     }
 
+    //chat visibility listener
+    var visibility = window.matchMedia("screen and (min-width: 800px)");
+    chatVisibility(visibility);
+    visibility.addListener(chatVisibility);
+
     function chatVisibility(visibility){
         if(visibility.matches){
             $('.flex-chat').removeClass('hidden');
@@ -76,6 +81,7 @@ $(document).ready(function () {
             $('.flex-chat').css({
                 'position': 'absolute', //DOESN'T LISTEN AT START
                 'top': '100px',
+                'left':'0px',
                 'width': '100%',
                 'height': 'inherit',
                 'pointer-events': 'none',
@@ -83,12 +89,9 @@ $(document).ready(function () {
             });
         }
     }
-    //chat visibility listener
-    var visibility = window.matchMedia("screen and (min-width: 800px)");
-    chatVisibility(visibility);
-    visibility.addListener(chatVisibility);
 
-    function listen_to_chat(){ //CURRENTLY SENDS MULTIPLE WHEN HOSTING/JOINING MULTIPLE TIMES IN A ROW
+
+    function listen_to_chat(){
         console.log('listening to chat');
         var newMessage = '';
         var ref = firebase.database().ref('Rooms/' + currentRoom).child('Messages');
