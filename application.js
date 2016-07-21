@@ -115,6 +115,26 @@ $(document).ready(function () {
         }
     }
 
+    function listen_to_players(){
+        //Setup a child added fucntion
+        var ref = firebase.database().ref().child('Rooms').child(currentRoom).child('players');
+        ref.on('child_added', function(data){
+            //In the Room
+            $('#join-player-list').append('<p>' + data.val().username + '</p>');
+        });
+
+        ref.on('child_removed', function(data){
+            //Just reload the list
+            var list = $('#join-player-list');
+            list.html('');
+            ref.once('value', function(data){
+                data.forEach(function(childsnap){
+                    list.append('<p>' + childsnap.val().username + '</p>');
+                });
+            });
+        });
+    }
+
     function rank_update(total_score){
         if(total_score >= 0 && total_score < 25){
             playerRank = "End User";
@@ -542,9 +562,21 @@ $(document).ready(function () {
                         i--;
                     }
                 }
+                var user = firebase.auth().currentUser.uid;
+                var initial = [user];
+                console.log(initial[0]);
                 firebase.database().ref().child('Rooms').child(newRoomCode).set({
                     array:roomArray,
                     winner:""
+                });
+
+                //Get username to store
+                var username_ref = firebase.database().ref().child('Users').child(user);
+                username_ref.once('value', function(data){
+                    var username = data.val().username;
+                     firebase.database().ref().child('Rooms').child(newRoomCode).child('players').child(user).set({
+                         username:username
+                     });
                 });
             });
             var userRef = firebase.database().ref('Users/'+ firebase.auth().currentUser.uid);
@@ -552,9 +584,16 @@ $(document).ready(function () {
             userUpdate['/current_room'] = newRoomCode;
             userRef.update(userUpdate);
             currentlyPlaying = false;
+            //First delete reference from old room if it exists
+            if (currentRoom !== ""){
+                 var oldRoom = firebase.database().ref().child('Rooms').child(currentRoom).child('players').child(firebase.auth().currentUser.uid);
+                 oldRoom.remove();
+            }
+
             currentRoom = newRoomCode;
             //start listening to room
             listen_to_room();
+            listen_to_players();
 
 
             $('.roomkey-alert').off().on('click', 'button', function(){
@@ -587,6 +626,11 @@ $(document).ready(function () {
                             var userUpdate = {};
                             userUpdate['/current_room'] = submittedCode;
                             userRef.update(userUpdate);
+                            //First delete reference from old room if it exists
+                            if (currentRoom !== ""){
+                                 var oldRoom = firebase.database().ref().child('Rooms').child(currentRoom).child('players').child(firebase.auth().currentUser.uid);
+                                 oldRoom.remove();
+                            }
                             currentRoom = submittedCode;
                             //shuffle the array
                             var shuffledArray = shuffleArray(childsnap.val().array);
@@ -594,6 +638,18 @@ $(document).ready(function () {
                             for (var i = 0; i < 24; i++){
                                 $('#cell' + i).html(shuffledArray[i]);
                             }
+
+                            //Add player to the joined room list
+                            var userReference = firebase.database().ref().child('Users').child(firebase.auth().currentUser.uid);
+                            userReference.once('value', function(data){
+                                var username = data.val().username;
+                                var rooomCodeRef = firebase.database().ref().child('Rooms').child(submittedCode).child('players').child(firebase.auth().currentUser.uid);
+                                rooomCodeRef.set({
+                                    username:username
+                                });
+
+                            });
+
                             listen_to_room();
                             $('.flex-chat__messages').find('.message').remove();
                             $('.flex-chat__messages').find('.chat-alert').remove();
@@ -602,6 +658,8 @@ $(document).ready(function () {
                             $('.title__roomkey').removeClass('hidden');
                             $('.title__roomkey').text(roomCode);
                             listen_to_chat();
+                            //Listen for new members
+                            listen_to_players();
                             currentlyPlaying = true;
                             console.log("hey");
                             return true;
