@@ -121,7 +121,7 @@ $(document).ready(function () {
         var ref = firebase.database().ref().child('Rooms').child(currentRoom).child('players');
         ref.on('child_added', function(data){
             //In the Room
-            $('#join-player-list').append('<p>' + data.val().username + '</p>');
+            $('#join-player-list').append('<li><p>' + data.val().username + '</p></li>');
         });
 
         ref.on('child_removed', function(data){
@@ -130,7 +130,7 @@ $(document).ready(function () {
             list.html('');
             ref.once('value', function(data){
                 data.forEach(function(childsnap){
-                    list.append('<p>' + childsnap.val().username + '</p>');
+                    list.append('<li><p>' + childsnap.val().username + '</p></li>');
                 });
             });
         });

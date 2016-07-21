@@ -87,19 +87,27 @@ button {
 }
 
 .join-list{
-    background-color: rgba(255, 255, 255 , 0.3);
+    background-color: #c25b0b;
     width: 40%;
     height: 20rem;
+    border: 1px solid white;
 }
 
 .join-list > #join-header{
     text-align: center;
-    color: darkgray;
+    color: white;
 }
 .join-list > #join-player-list > li {
     color: white;
+    font-family: "Arial";
 }
 
+.join-list > #join-player-list {
+    color: white;
+    padding: 0;
+    margin-left: 20px;
+
+}
 .chat-icon{
     border: 0;
     background: transparent;
