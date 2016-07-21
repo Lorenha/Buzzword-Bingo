@@ -71,7 +71,6 @@ $(document).ready(function () {
                 'width': '40%',
                 'height': '100%',
                 'position': 'relative',
-                'pointer-events': 'all',
                 'top': '0',
                 'left': '0'
             });
@@ -84,7 +83,6 @@ $(document).ready(function () {
                 'left':'0px',
                 'width': '100%',
                 'height': 'inherit',
-                'pointer-events': 'none',
                 'z-index': '2'
             });
         }

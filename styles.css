@@ -178,7 +178,6 @@ button {
     width: 40%;
     height: 100%;
     position: relative;
-    pointer-events: all;
 
 }
 
