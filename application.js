@@ -78,7 +78,7 @@ $(document).ready(function () {
         else{
             $('.flex-chat').addClass('hidden');
             $('.flex-chat').css({
-                'position': 'absolute', //DOESN'T LISTEN AT START
+                'position': 'absolute',
                 'top': '100px',
                 'left':'0px',
                 'width': '100%',
@@ -710,8 +710,10 @@ $(document).ready(function () {
     $('.menu-icon').on('click', function () {
         if (just_started === false){
             if(isMenuOpen === false){
-                isChatOpen = true;
-                $('.chat-icon').click();
+                if(!chatVisibility(visibility)){
+                    isChatOpen = true;
+                    $('.chat-icon').click();
+                }
                 openMenu();
             }
             else if((isMenuOpen === true) && (currentlyPlaying === true)){
