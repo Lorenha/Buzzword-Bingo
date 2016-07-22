@@ -116,15 +116,17 @@ $(document).ready(function () {
         }
     }
 
+    var player_added;
+    var player_removed;
     function listen_to_players(){
         //Setup a child added fucntion
         var ref = firebase.database().ref().child('Rooms').child(currentRoom).child('players');
-        ref.on('child_added', function(data){
+        player_added = ref.on('child_added', function(data){
             //In the Room
             $('#join-player-list').append('<li><p>' + data.val().username + '</p></li>');
         });
 
-        ref.on('child_removed', function(data){
+        player_removed = ref.on('child_removed', function(data){
             //Just reload the list
             var list = $('#join-player-list');
             list.html('');
@@ -195,12 +197,7 @@ $(document).ready(function () {
           }
         });
     }
-
-
-
-
-
-    var playerRank = "End User";
+   var playerRank = "End User";
 
     var localWin = false;
     var currentlyPlaying = false;
@@ -589,6 +586,11 @@ $(document).ready(function () {
             if (currentRoom !== ""){
                  var oldRoom = firebase.database().ref().child('Rooms').child(currentRoom).child('players').child(firebase.auth().currentUser.uid);
                  oldRoom.remove();
+                //Detach old listener
+                var room_ref =  firebase.database().ref().child('Rooms').child(currentRoom).child('players');
+                room_ref.off('child_added', player_added);
+                room_ref.off('child_removed', player_removed);
+
             }
 
             currentRoom = newRoomCode;
@@ -630,6 +632,10 @@ $(document).ready(function () {
                             if (currentRoom !== ""){
                                  var oldRoom = firebase.database().ref().child('Rooms').child(currentRoom).child('players').child(firebase.auth().currentUser.uid);
                                  oldRoom.remove();
+                                //Detach old listener
+                                var room_ref =  firebase.database().ref().child('Rooms').child(currentRoom).child('players');
+                                room_ref.off('child_added', player_added);
+                                room_ref.off('child_removed', player_removed);
                             }
                             currentRoom = submittedCode;
                             //shuffle the array
@@ -772,11 +778,6 @@ $(document).ready(function () {
 
                 var thisItem = $(this);
                 var thisWord = $(this).find('p').text();
-//                var currentWordCount = 0;
-//                firebase.database().ref('Words/' + thisWord).child('/count').on('value', function(snapshot){
-//                    currentWordCount =  snapshot.val();
-//                    console.log("current word count: " + currentWordCount);
-
 
                     if ($(this).hasClass('wordSelected')) {
                         score -= 5;
@@ -786,12 +787,8 @@ $(document).ready(function () {
                         $('.points').html(score);
                     }
                     $('.points').html(score);
-//                });
 
                 $(this).toggleClass('wordSelected');
-
-
-
                 var wordRef = firebase.database().ref('Words/' + thisWord);
                 firebase.database().ref('Words/' + thisWord + '/count').once('value', function(snapshot){
 
