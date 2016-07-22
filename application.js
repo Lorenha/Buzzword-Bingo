@@ -195,12 +195,7 @@ $(document).ready(function () {
           }
         });
     }
-
-
-
-
-
-    var playerRank = "End User";
+   var playerRank = "End User";
 
     var localWin = false;
     var currentlyPlaying = false;
@@ -589,6 +584,8 @@ $(document).ready(function () {
             if (currentRoom !== ""){
                  var oldRoom = firebase.database().ref().child('Rooms').child(currentRoom).child('players').child(firebase.auth().currentUser.uid);
                  oldRoom.remove();
+                //Detach old listener
+                firebase.database().ref()child('Rooms').child(currentRoom).child('players').off();
             }
 
             currentRoom = newRoomCode;
@@ -630,6 +627,8 @@ $(document).ready(function () {
                             if (currentRoom !== ""){
                                  var oldRoom = firebase.database().ref().child('Rooms').child(currentRoom).child('players').child(firebase.auth().currentUser.uid);
                                  oldRoom.remove();
+                                //Detach old listener
+                                firebase.database().ref()child('Rooms').child(currentRoom).child('players').off();
                             }
                             currentRoom = submittedCode;
                             //shuffle the array
@@ -770,11 +769,6 @@ $(document).ready(function () {
 
                 var thisItem = $(this);
                 var thisWord = $(this).find('p').text();
-//                var currentWordCount = 0;
-//                firebase.database().ref('Words/' + thisWord).child('/count').on('value', function(snapshot){
-//                    currentWordCount =  snapshot.val();
-//                    console.log("current word count: " + currentWordCount);
-
 
                     if ($(this).hasClass('wordSelected')) {
                         score -= 5;
@@ -784,12 +778,8 @@ $(document).ready(function () {
                         $('.points').html(score);
                     }
                     $('.points').html(score);
-//                });
 
                 $(this).toggleClass('wordSelected');
-
-
-
                 var wordRef = firebase.database().ref('Words/' + thisWord);
                 firebase.database().ref('Words/' + thisWord + '/count').once('value', function(snapshot){
 
