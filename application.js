@@ -116,15 +116,17 @@ $(document).ready(function () {
         }
     }
 
+    var player_added;
+    var player_removed;
     function listen_to_players(){
         //Setup a child added fucntion
         var ref = firebase.database().ref().child('Rooms').child(currentRoom).child('players');
-        ref.on('child_added', function(data){
+        player_added = ref.on('child_added', function(data){
             //In the Room
             $('#join-player-list').append('<li><p>' + data.val().username + '</p></li>');
         });
 
-        ref.on('child_removed', function(data){
+        player_removed = ref.on('child_removed', function(data){
             //Just reload the list
             var list = $('#join-player-list');
             list.html('');
@@ -585,7 +587,10 @@ $(document).ready(function () {
                  var oldRoom = firebase.database().ref().child('Rooms').child(currentRoom).child('players').child(firebase.auth().currentUser.uid);
                  oldRoom.remove();
                 //Detach old listener
-                firebase.database().ref()child('Rooms').child(currentRoom).child('players').off();
+                var room_ref =  firebase.database().ref().child('Rooms').child(currentRoom).child('players');
+                room_ref.off('child_added', player_added);
+                room_ref.off('child_removed', player_removed);
+
             }
 
             currentRoom = newRoomCode;
@@ -628,7 +633,9 @@ $(document).ready(function () {
                                  var oldRoom = firebase.database().ref().child('Rooms').child(currentRoom).child('players').child(firebase.auth().currentUser.uid);
                                  oldRoom.remove();
                                 //Detach old listener
-                                firebase.database().ref()child('Rooms').child(currentRoom).child('players').off();
+                                var room_ref =  firebase.database().ref().child('Rooms').child(currentRoom).child('players');
+                                room_ref.off('child_added', player_added);
+                                room_ref.off('child_removed', player_removed);
                             }
                             currentRoom = submittedCode;
                             //shuffle the array
