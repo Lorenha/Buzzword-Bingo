@@ -351,10 +351,13 @@ code {
 
 .docs-grid-item {
     padding: 4vw;
+    position: relative;
+    height: 20%;
+    width: 20%;
     background-color: #EEE;
     color: #121212;
     box-shadow: inset 0 0 2px #BBB;
-    height: 17vh;
+//    height: 17vh;
     word-break: normal;
     p {
         margin: 0;
@@ -367,12 +370,11 @@ code {
     box-shadow: inset 0 0 7px #2098d1;
 }
 
-@media only screen and (min-height: 700px){
-    .docs-grid-item{
-        height: 17.6vh;
-    }
-}
-
+//@media only screen and (min-height: 700px){
+//    .docs-grid-item{
+//        height: 17.6vh;
+//    }
+//}
 
 @media only screen and (min-width: 800px){
     .docs-grid-item{

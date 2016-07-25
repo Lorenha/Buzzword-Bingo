@@ -1457,48 +1457,45 @@ code {
 /* line 338, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
 .docs-grid-item {
   padding: 4vw;
+  position: relative;
+  height: 20%;
+  width: 20%;
   background-color: #EEE;
   color: #121212;
   box-shadow: inset 0 0 2px #BBB;
-  height: 17vh;
   word-break: normal; }
-  /* line 345, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
+  /* line 348, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
   .docs-grid-item p {
     margin: 0;
     padding: 0; }
 
-/* line 351, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
+/* line 354, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
 .docs-grid-item:hover {
   box-shadow: inset 0 0 7px #2098d1; }
 
-@media only screen and (min-height: 700px) {
-  /* line 357, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
-  .docs-grid-item {
-    height: 17.6vh; } }
-
 @media only screen and (min-width: 800px) {
-  /* line 364, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
+  /* line 366, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
   .docs-grid-item {
     padding: 4vh; } }
 
-/* line 369, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
+/* line 371, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
 .docs-nested-grid-item {
   padding: 1rem;
   background-color: #BBB;
   color: #121212;
   box-shadow: inset 0 0 2px #DDD; }
-  /* line 374, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
+  /* line 376, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
   .docs-nested-grid-item p {
     margin: 0; }
 
-/* line 379, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
+/* line 381, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
 .docs-footnote {
   margin-top: 1.5rem;
   text-align: right;
   font-style: italic;
   color: #555; }
 
-/* line 386, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
+/* line 388, C:/Users/lheubert/Documents/Buzzword Bingo Public/Buzzword-Bingo/flex.scss */
 .docs-footer {
   padding-top: 1rem;
   padding-bottom: 1rem;

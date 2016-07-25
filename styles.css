@@ -155,12 +155,20 @@ button {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    height: 100vh;
+}
+
+.grid-dimensions{
+    height: 100%;
+    width: 100%;
 }
 
 .flex-app__main {
     flex: 1 0 auto;
     text-align: center;
     font-size: 60%;
+    height: inherit;
+    width: inherit;
 
 }
 
