@@ -716,7 +716,7 @@ $(document).ready(function () {
     $('.menu-icon').on('click', function () {
         if (just_started === false){
             if(isMenuOpen === false){
-                if(!chatVisibility(visibility)){
+                if(chatVisibility(visibility) === false){
                     isChatOpen = true;
                     $('.chat-icon').click();
                 }
