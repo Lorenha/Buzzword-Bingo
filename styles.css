@@ -97,6 +97,11 @@ button {
     text-align: center;
     color: white;
 }
+
+.join-list > #join-header h3{
+    margin-top: 0.5em;
+}
+
 .join-list > #join-player-list > li {
     color: white;
     font-family: "Arial";
